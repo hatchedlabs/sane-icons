@@ -1,10 +1,8 @@
 # Sane icons
 
-# What is this
+This is a useful layer between the feather-icons library and your implementation.
 
-This is a branch off of the good work done by the feather icons team.
-
-It aims to achieve three additional goals:
+It aims to achieve three goals that feather-icons does not:
   - **Extensibility**
     - Can add custom icons
     - Can overwrite default icons with custom ones
@@ -75,6 +73,8 @@ This is the SVG code for the alert-triangle icon:
 
 The majority of the code is contained in the `<svg ...>` tag, but these are the same for
 every icon, which means we can strip this and generate it on the client.
+
+Here's a plain old JS example:
 
 ```html
 <script>
