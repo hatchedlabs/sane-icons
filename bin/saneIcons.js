@@ -4,11 +4,12 @@ const path = require('path');
 const mergeIcons = require('../lib/mergeIcons.js');
 const filterIcons = require('../lib/filterIcons.js');
 
-const reactComponent = require('../lib/reactComponent');
-
 const test = require('../test/saneIcons.spec.js');
 
-const targets = { reactComponent };
+const targets = {
+  reactComponent: require('../lib/reactComponent'),
+  reactComponents: require('../lib/reactComponents')
+};
 
 const generate = (target, options = {}, customIcons = []) =>
   fs.remove(path.join(__dirname, 'dist'))
