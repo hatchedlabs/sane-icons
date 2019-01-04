@@ -45,6 +45,11 @@ brings me to...
 
 Pre-made implementations designed to give a simple development experience.
 
+- `reactComponent`
+  - a single react component that contains all the icons
+  - example usage: `<Icon alert-circle />`
+  - [See example on JSFiddle](https://jsfiddle.net/amn7x6L0)
+
 ### No per-icon custom attributes
 
 In the original feather icons library, they did well to keep to their
