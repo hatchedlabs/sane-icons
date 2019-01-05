@@ -12,23 +12,27 @@ const targets = {
 };
 
 const generate = (target, options = {}, customIcons = []) =>
-  fs.remove(path.join(__dirname, 'dist'))
-    .then(() => {
-      if (targets[target]) {
-        options = {
-          strokeWidth: 2,
-          ...options
-        };
+  new Promise((resolve, reject) => {
+    if (targets[target]) {
+      options = {
+        strokeWidth: 2,
+        ...options
+      };
 
-        return mergeIcons(customIcons)
+      resolve(
+        fs.remove(path.join(__dirname, 'dist', target))
+          .then(() => mergeIcons(customIcons))
           .then(filterIcons)
-          .then(icons => targets[target](icons));
-      } else {
-        throw new Error(
+          .then(icons => targets[target](icons))
+      );
+    } else {
+      reject(
+        new Error(
           `invalid target. must be one of {"${Object.keys(targets).join('", "')}"}
-        `);
-      }
-    });
+        `)
+      );
+    }
+  });
 
 if (require.main === module) {
   test(generate)
