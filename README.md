@@ -61,6 +61,7 @@ Pre-made implementations designed to give a simple development experience.
   - example usage:
     - `import AlertCircleIcon from "../icons/AlertCircleIcon"`
     - `<AlertCircleIcon />`
+  - [See example on JSFiddle](https://jsfiddle.net/efc4vxqg)
 
 ### No per-icon custom attributes
 
