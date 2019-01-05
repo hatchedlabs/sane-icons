@@ -47,8 +47,20 @@ Pre-made implementations designed to give a simple development experience.
 
 - `reactComponent`
   - a single react component that contains all the icons
+  - very efficient, provided you remove all (or at least most) of the unused icons
+    in the build options
+  - uses PureComponent by default, to avoid unnecessary rerendering
   - example usage: `<Icon alert-circle />`
   - [See example on JSFiddle](https://jsfiddle.net/amn7x6L0)
+- `reactComponents`
+  - a react component for every icon (generally, use `reactComponent` instead)
+  - takes longer to build as it runs prettier on every generated file
+  - massively less efficient per icon than `reactComponent` (10x the gzip'd bundle size),
+    more so when using PureComponent
+  - guarantees no unused icons in webpack builds
+  - example usage:
+    - `import AlertCircleIcon from "../icons/AlertCircleIcon"`
+    - `<AlertCircleIcon />`
 
 ### No per-icon custom attributes
 
