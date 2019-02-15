@@ -13,6 +13,8 @@
     "feather-icons": "^4.10.0",
     "fs-extra": "^7.0.1",
     "prettier": "^1.15.3",
-    "svgo": "^1.1.1"
+    "svg-outline-stroke": "^1.2.3",
+    "svgo": "^1.1.1",
+    "webfonts-generator": "^0.4.0"
   }
 }

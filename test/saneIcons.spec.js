@@ -6,5 +6,6 @@ module.exports = generate =>
     return resolve(
       generate('reactComponent', testCustomOptions, testCustomIcons)
         .then(() => generate('reactComponents', testCustomOptions, testCustomIcons))
+        .then(() => generate('svg', testCustomOptions, testCustomIcons))
     );
   });

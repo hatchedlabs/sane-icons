@@ -7,8 +7,12 @@ const filterIcons = require('../lib/filterIcons.js');
 const test = require('../test/saneIcons.spec.js');
 
 const targets = {
-  reactComponent: require('../lib/reactComponent'),
-  reactComponents: require('../lib/reactComponents')
+  svg: [require('../lib/svg')],
+  reactComponent: [require('../lib/reactComponent')],
+  reactComponents: [require('../lib/reactComponents')],
+  html: [require('../lib/html')],
+  // ttf: ['svg', require('../lib/ttf')]
+  // (doesn't work as glyphs dont support stroke width and even odd)
 };
 
 const generate = (target, options = {}, customIcons = []) =>
@@ -23,7 +27,26 @@ const generate = (target, options = {}, customIcons = []) =>
         fs.remove(path.join(__dirname, 'dist', target))
           .then(() => mergeIcons(customIcons))
           .then(filterIcons)
-          .then(icons => targets[target](icons))
+          .then(icons => {
+            const list = targets[target];
+            let currentPromise = Promise.resolve();
+            let lastPromise = Promise.resolve();
+            while (list.length) {
+              const el = list.shift();
+              if (typeof el === 'function') {
+                currentPromise.then(() => {
+                  if (list.length) {
+                    currentPromise = el(icons);
+                  } else {
+                    lastPromise = el(icons);
+                  }
+                });
+              } else {
+                list.unshift(...targets[el]);
+              }
+            }
+            return lastPromise;
+          })
       );
     } else {
       reject(
