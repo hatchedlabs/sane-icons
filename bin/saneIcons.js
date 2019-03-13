@@ -12,7 +12,7 @@ const targets = {
   reactComponent: [require('../lib/reactComponent')],
   reactComponents: [require('../lib/reactComponents')],
   html: [require('../lib/html')]
-  // ttf: ['svg', require('../lib/ttf')] (broken atm)
+  // ttf: ['svg', require('../lib/ttf')] (broken atm as glyphs ignore strokes)
 };
 
 const generate = (target, options = {}, customIcons = []) =>
