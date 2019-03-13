@@ -8,42 +8,21 @@ const filterIcons = require('../lib/filterIcons.js');
 const test = require('../test/saneIcons.spec.js');
 
 const targets = {
-  svg: [require('../lib/svg')],
-  reactComponent: [require('../lib/reactComponent')],
-  reactComponents: [require('../lib/reactComponents')],
-  html: [require('../lib/html')]
-  // ttf: ['svg', require('../lib/ttf')] (broken atm as glyphs ignore strokes)
-  // requires package: "webfonts-generator": "^0.4.0"
+  svg: require('../lib/svg'),
+  reactComponent: require('../lib/reactComponent'),
+  reactComponents: require('../lib/reactComponents'),
+  html: require('../lib/html')
 };
 
-const generate = (target, options = {}, customIcons = [], dir = path.join(__dirname, 'dist')) =>
+const generate = (target, options = {}, customIcons = [], dir = path.join(__dirname, '../dist', target)) =>
   new Promise((resolve, reject) => {
     if (targets[target]) {
       resolve(
-        fs.remove(path.join(dir, target))
+        fs.remove(dir)
           .then(() => mergeIcons(customIcons))
           .then(icons => applyOptionsToIcons(icons, options))
           .then(filterIcons)
-          .then(icons => {
-            const list = targets[target];
-            let currentPromise = Promise.resolve();
-            let lastPromise = Promise.resolve();
-            while (list.length) {
-              const el = list.shift();
-              if (typeof el === 'function') {
-                currentPromise.then(() => {
-                  if (list.length) {
-                    currentPromise = el(icons);
-                  } else {
-                    lastPromise = el(icons);
-                  }
-                });
-              } else {
-                list.unshift(...targets[el]);
-              }
-            }
-            return lastPromise;
-          })
+          .then(icons => (targets[target](icons, dir)))
       );
     } else {
       reject(
@@ -62,4 +41,7 @@ if (require.main === module) {
       console.error(err);
     });
 }
+
+generate.allTargets = Object.keys(targets);
+
 module.exports = generate;
