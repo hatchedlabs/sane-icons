@@ -1,6 +1,6 @@
 {
   "name": "sane-icons",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "bin/saneIcons.js",
   "author": "Tom Golden <tom@hatchedlabs.com>",
   "license": "MIT",
@@ -14,7 +14,6 @@
     "fs-extra": "^7.0.1",
     "prettier": "^1.15.3",
     "svg-outline-stroke": "^1.2.3",
-    "svgo": "^1.1.1",
-    "webfonts-generator": "^0.4.0"
+    "svgo": "^1.1.1"
   }
 }

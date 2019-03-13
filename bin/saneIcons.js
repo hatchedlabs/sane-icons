@@ -13,6 +13,7 @@ const targets = {
   reactComponents: [require('../lib/reactComponents')],
   html: [require('../lib/html')]
   // ttf: ['svg', require('../lib/ttf')] (broken atm as glyphs ignore strokes)
+  // requires package: "webfonts-generator": "^0.4.0"
 };
 
 const generate = (target, options = {}, customIcons = []) =>
