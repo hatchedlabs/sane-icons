@@ -16,11 +16,11 @@ const targets = {
   // requires package: "webfonts-generator": "^0.4.0"
 };
 
-const generate = (target, options = {}, customIcons = []) =>
+const generate = (target, options = {}, customIcons = [], dir = path.join(__dirname, 'dist')) =>
   new Promise((resolve, reject) => {
     if (targets[target]) {
       resolve(
-        fs.remove(path.join(__dirname, 'dist', target))
+        fs.remove(path.join(dir, target))
           .then(() => mergeIcons(customIcons))
           .then(icons => applyOptionsToIcons(icons, options))
           .then(filterIcons)
