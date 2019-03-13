@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 const mergeIcons = require('../lib/mergeIcons.js');
+const applyOptionsToIcons = require('../lib/applyOptionsToIcons.js');
 const filterIcons = require('../lib/filterIcons.js');
 
 const test = require('../test/saneIcons.spec.js');
@@ -10,22 +11,17 @@ const targets = {
   svg: [require('../lib/svg')],
   reactComponent: [require('../lib/reactComponent')],
   reactComponents: [require('../lib/reactComponents')],
-  html: [require('../lib/html')],
-  // ttf: ['svg', require('../lib/ttf')]
-  // (doesn't work as glyphs dont support stroke width and even odd)
+  html: [require('../lib/html')]
+  // ttf: ['svg', require('../lib/ttf')] (broken atm)
 };
 
 const generate = (target, options = {}, customIcons = []) =>
   new Promise((resolve, reject) => {
     if (targets[target]) {
-      options = {
-        strokeWidth: 2,
-        ...options
-      };
-
       resolve(
         fs.remove(path.join(__dirname, 'dist', target))
           .then(() => mergeIcons(customIcons))
+          .then(icons => applyOptionsToIcons(icons, options))
           .then(filterIcons)
           .then(icons => {
             const list = targets[target];
